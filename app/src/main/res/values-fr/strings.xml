@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SnowtamReader</string>
+    <string name="codeOACI">Indicatif OACI</string>
+    <string name="research">Rechercher</string>
+</resources>

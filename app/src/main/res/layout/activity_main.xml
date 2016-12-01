@@ -9,8 +9,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="snowtam_ensim.snowtamreader2.MainActivity">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="150px"
+        android:id="@+id/searchLayout">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="@string/codeOACI"
+            android:ems="10"
+            android:id="@+id/searchOACI"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:textColor="@color/colorGrise"
+            android:maxLines="4"/>
+
+        <Button
+            android:layout_width="150px"
+            android:layout_height="wrap_content"
+            android:id="@+id/plusButton"
+            android:background="@drawable/plus"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
+
+    <Button
+        android:text="@string/research"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_below="@+id/searchLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        android:id="@+id/btnValidate" />
 </RelativeLayout>

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">SnowtamReader2</string>
+    <string name="app_name">SnowtamReader</string>
+    <string name="codeOACI">OACI code</string>
+    <string name="research">Research</string>
 </resources>
