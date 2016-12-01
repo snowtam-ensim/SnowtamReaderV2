@@ -1,9 +1,11 @@
-package snowtam_ensim.snowtamreader2;
+package snowtam_ensim.snowtamreader2.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import snowtam_ensim.snowtamreader2.R;
 
 /**
  * Created by Raphaël on 24/11/2016.
