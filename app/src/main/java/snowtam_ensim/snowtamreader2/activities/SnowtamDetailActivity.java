@@ -12,7 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -50,17 +61,24 @@ public class SnowtamDetailActivity extends AppCompatActivity {
     public void switchDisplayMode(View view) {
         // Change the label
         Button button = (Button) findViewById(R.id.left_button);
-        if (button.getText().equals(getString(R.string.parsed_snowtam))) {
+        if (button.getText().toString().equals(getString(R.string.parsed_snowtam))) {
             button.setText(getString(R.string.raw_snowtam));
+            PlaceholderFragment.changeDisplayMode(PlaceholderFragment.DISPLAY_PARSED_SNOWTAM);
         }
         else {
             button.setText(getString(R.string.parsed_snowtam));
+            PlaceholderFragment.changeDisplayMode(PlaceholderFragment.DISPLAY_RAW_SNOWTAM);
         }
 
-        // Update the display mode
-        PlaceholderFragment.switchDisplayMode();
         // Update the fragments'view
         mSectionsPagerAdapter.notifyDataSetChanged();
+    }
+
+    public void showMap(View view) {
+        if (PlaceholderFragment.getDisplayMode() != PlaceholderFragment.DISPLAY_MAP) {
+            PlaceholderFragment.changeDisplayMode(PlaceholderFragment.DISPLAY_MAP);
+            mSectionsPagerAdapter.notifyDataSetChanged();
+        }
     }
 
     /**
@@ -71,13 +89,23 @@ public class SnowtamDetailActivity extends AppCompatActivity {
          * The fragment argument representing the section number for this
          * fragment.
          */
+        public static int DISPLAY_RAW_SNOWTAM = 0;
+        public static int DISPLAY_PARSED_SNOWTAM = 1;
+        public static int DISPLAY_MAP = 2;
+
         private static final String ARG_SNOWTAM = "snowtam";
-        private static boolean rawMode = true;
+        private static int displayMode = DISPLAY_PARSED_SNOWTAM;
+        private GoogleMap googleMap;
+        private MapView mapView;
 
         public PlaceholderFragment() {}
 
-        public static void switchDisplayMode() {
-            PlaceholderFragment.rawMode = !PlaceholderFragment.rawMode;
+        public static int getDisplayMode() {
+            return displayMode;
+        }
+
+        public static void changeDisplayMode(int displayMode) {
+            PlaceholderFragment.displayMode = displayMode;
         }
 
         /**
@@ -97,18 +125,75 @@ public class SnowtamDetailActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_snowtam_detail, container, false);
 
-            Snowtam snowtam = getArguments().getParcelable(ARG_SNOWTAM);
+            final Snowtam snowtam = getArguments().getParcelable(ARG_SNOWTAM);
             ((TextView) rootView.findViewById(R.id.snowtam_title_textView)).setText(snowtam.getOaci());
-            TextView snowtamTextView = (TextView) rootView.findViewById(R.id.snowtam_textView);
 
-            if (rawMode) {
+            TextView snowtamTextView = (TextView) rootView.findViewById(R.id.snowtam_textView);
+            mapView = (MapView) rootView.findViewById(R.id.mapView);
+            mapView.onCreate(savedInstanceState);
+
+            try {
+                MapsInitializer.initialize(getActivity().getApplicationContext());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            mapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap mMap) {
+                    googleMap = mMap;
+
+                    // For showing a move to my location button
+                    //googleMap.setMyLocationEnabled(true);
+
+                    // For dropping a marker at a point on the Map
+                    LatLng airfield = new LatLng(snowtam.getLatitude(), snowtam.getLongitude());
+                    googleMap.addMarker(new MarkerOptions().position(airfield));
+
+                    // For zooming automatically to the location of the marker
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(airfield).zoom(12).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
+            });
+
+            if (displayMode == DISPLAY_RAW_SNOWTAM) {
+                mapView.setVisibility(View.GONE);
                 snowtamTextView.setText(snowtam.getRawContent());
             }
-            else {
+            else if (displayMode == DISPLAY_PARSED_SNOWTAM){
+                mapView.setVisibility(View.GONE);
                 snowtamTextView.setText(snowtam.getParsedContent());
+            }
+            else {
+                snowtamTextView.setText("");
+                mapView.setVisibility(View.VISIBLE);
             }
 
             return rootView;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            mapView.onResume();
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            mapView.onPause();
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            mapView.onDestroy();
+        }
+
+        @Override
+        public void onLowMemory() {
+            super.onLowMemory();
+            mapView.onLowMemory();
         }
     }
 

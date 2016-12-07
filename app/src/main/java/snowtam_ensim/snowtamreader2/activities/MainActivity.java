@@ -23,13 +23,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void validate(View v) {
         ArrayList<String> oaci = new ArrayList<String>();
-        oaci.add(((EditText) findViewById(R.id.oaci_editText1)).getText().toString());
-        oaci.add(((EditText) findViewById(R.id.oaci_editText2)).getText().toString());
-        oaci.add(((EditText) findViewById(R.id.oaci_editText3)).getText().toString());
-        oaci.add(((EditText) findViewById(R.id.oaci_editText4)).getText().toString());
+        if (!((EditText) findViewById(R.id.oaci_editText1)).getText().toString().equals(""))
+            oaci.add(((EditText) findViewById(R.id.oaci_editText1)).getText().toString());
+        if (!((EditText) findViewById(R.id.oaci_editText2)).getText().toString().equals(""))
+            oaci.add(((EditText) findViewById(R.id.oaci_editText2)).getText().toString());
+        if (!((EditText) findViewById(R.id.oaci_editText3)).getText().toString().equals(""))
+            oaci.add(((EditText) findViewById(R.id.oaci_editText3)).getText().toString());
+        if (!((EditText) findViewById(R.id.oaci_editText4)).getText().toString().equals(""))
+            oaci.add(((EditText) findViewById(R.id.oaci_editText4)).getText().toString());
 
         SnowtamRetrieval service = new SnowtamRetrieval(this);
-        service.retrieveSnowtams(getApplicationContext(), oaci);
+        if (!oaci.isEmpty())
+            service.retrieveSnowtams(getApplicationContext(), oaci);
+        else
+            displayToast(getString(R.string.error_fill_fields));
     }
 
     public void goToNextActivity(ArrayList<Snowtam> snowtams) {

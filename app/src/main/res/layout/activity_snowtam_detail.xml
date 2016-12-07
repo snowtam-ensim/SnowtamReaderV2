@@ -11,7 +11,7 @@
 
     <Button
         style="@style/LargeButton"
-        android:text="@string/parsed_snowtam"
+        android:text="@string/raw_snowtam"
         android:id="@+id/left_button"
         android:onClick="switchDisplayMode"
         android:layout_alignParentBottom="true"
