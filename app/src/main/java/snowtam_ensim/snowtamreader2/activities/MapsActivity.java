@@ -56,5 +56,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions()
                 .position(airfield));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(airfield));
+        mMap.setMinZoomPreference(18);
     }
 }
