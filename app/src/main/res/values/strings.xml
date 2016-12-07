@@ -2,4 +2,6 @@
     <string name="app_name">SnowtamReader</string>
     <string name="codeOACI">OACI code</string>
     <string name="research">Research</string>
+    <string name="map">Map</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
