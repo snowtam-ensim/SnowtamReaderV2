@@ -6,4 +6,5 @@
     <string name="parsed_snowtam">Parsed SNOWTAM</string>
     <string name="raw_snowtam">Raw SNOWTAM</string>
     <string name="map">Map</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
