@@ -1,37 +1,45 @@
 package snowtam_ensim.snowtamreader2.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import snowtam_ensim.snowtamreader2.R;
+import snowtam_ensim.snowtamreader2.model.Snowtam;
+import snowtam_ensim.snowtamreader2.network.SnowtamRetrieval;
 
-public class MainActivity extends AppCompatActivity
-{
-
-    final String EXTRA_OACI = "OACI";
+public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        final EditText oaci = (EditText) findViewById(R.id.searchOACI);
-        final Button btnValidate = (Button) findViewById(R.id.btnValidate);
+    public void validate(View v) {
+        ArrayList<String> oaci = new ArrayList<String>();
+        oaci.add(((EditText) findViewById(R.id.oaci_editText1)).getText().toString());
+        oaci.add(((EditText) findViewById(R.id.oaci_editText2)).getText().toString());
+        oaci.add(((EditText) findViewById(R.id.oaci_editText3)).getText().toString());
+        oaci.add(((EditText) findViewById(R.id.oaci_editText4)).getText().toString());
 
-        btnValidate.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getApplicationContext(), SnowtamDisplayActivity.class);
-                intent.putExtra(EXTRA_OACI, oaci.getText().toString());
-                startActivity(intent);
+        SnowtamRetrieval service = new SnowtamRetrieval(this);
+        service.retrieveSnowtams(getApplicationContext(), oaci);
+    }
 
-            }
-        });
+    public void goToNextActivity(ArrayList<Snowtam> snowtams) {
+        Intent intent = new Intent(getApplicationContext(), SnowtamDetailActivity.class);
+        intent.putParcelableArrayListExtra("Snowtams", snowtams);
+
+        startActivity(intent);
+    }
+
+    public void displayToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
