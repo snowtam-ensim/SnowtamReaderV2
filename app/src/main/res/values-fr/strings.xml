@@ -3,4 +3,8 @@
     <string name="app_name">SnowtamReader</string>
     <string name="codeOACI">Indicatif OACI</string>
     <string name="research">Rechercher</string>
+    <string name="title_activity_snowtam_detail">Détails</string>
+    <string name="parsed_snowtam">SNOWTAM décodé</string>
+    <string name="raw_snowtam">SNOWTAM brut</string>
+    <string name="map">Carte</string>
 </resources>

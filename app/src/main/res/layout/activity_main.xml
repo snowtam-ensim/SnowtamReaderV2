@@ -9,40 +9,61 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.MainActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="150px"
-        android:id="@+id/searchLayout">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/codeOACI"
-            android:ems="10"
-            android:id="@+id/searchOACI"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center"/>
-
-        <Button
-            android:layout_width="150px"
-            android:layout_height="wrap_content"
-            android:id="@+id/plusButton"
-            android:background="@drawable/plus"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="right" />
-
-    </LinearLayout>
-
-    <Button
-        android:text="@string/research"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/searchLayout"
+        android:inputType="text"
+        android:hint="@string/codeOACI"
+        android:ems="10"
+        android:id="@+id/oaci_editText1"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
-        android:id="@+id/btnValidate" />
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/codeOACI"
+        android:ems="10"
+        android:id="@+id/oaci_editText2"
+        android:layout_gravity="center"
+        android:layout_below="@+id/oaci_editText1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/codeOACI"
+        android:ems="10"
+        android:id="@+id/oaci_editText3"
+        android:layout_gravity="center"
+        android:layout_below="@+id/oaci_editText2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/codeOACI"
+        android:ems="10"
+        android:id="@+id/oaci_editText4"
+        android:layout_gravity="center"
+        android:layout_below="@+id/oaci_editText3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+    <Button
+        style="@style/LargeButton"
+        android:text="@string/research"
+        android:id="@+id/btnValidate"
+        android:onClick="validate"
+        android:layout_below="@+id/oaci_editText4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
 
 </RelativeLayout>
