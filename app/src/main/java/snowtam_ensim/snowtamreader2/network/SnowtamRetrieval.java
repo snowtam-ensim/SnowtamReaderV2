@@ -100,6 +100,9 @@ public class SnowtamRetrieval {
 
                                 requestQueue.add(coordinatesRequest);
                             }
+                            else {
+                                nbSnowtamsRequested++;
+                            }
 
                             nbSnowtamsRequested++;
                             sendResult();
@@ -124,30 +127,7 @@ public class SnowtamRetrieval {
                 }
             };
 
-            /*StringRequest coordinatesRequest = new StringRequest
-                    (Request.Method.GET, SNOWTAM_COORDINATES_URL + oaci, new Response.Listener<String>() {
-
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("SnowtamReader", "Coordinates received");
-                            String regex = "data-key=\"Latitude\" data-value=\"(.*?)\".*?data-key=\"Longitude\" data-value=\"(.*?)\"";
-                            Pattern pattern = Pattern.compile(regex);
-                            Matcher matcher = pattern.matcher(response);
-
-                            if (matcher.find()) {
-                                Log.d("SnowtamReader", "Latitude : " + matcher.group(1) + ", Longitude : " + matcher.group(2));
-                            }
-                        }
-
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            activity.displayToast("Erreur : " + error.getMessage());
-                        }
-                    });*/
-
             requestQueue.add(contentRequest);
-            //requestQueue.add(coordinatesRequest);
         }
     }
 
