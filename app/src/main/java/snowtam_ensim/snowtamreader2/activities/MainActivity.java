@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -33,10 +34,14 @@ public class MainActivity extends AppCompatActivity {
             oaci.add(((EditText) findViewById(R.id.oaci_editText4)).getText().toString());
 
         SnowtamRetrieval service = new SnowtamRetrieval(this);
-        if (!oaci.isEmpty())
+        if (!oaci.isEmpty()) {
+            v.setEnabled(false);
+            displayToast(getString(R.string.message_loading_snowtams));
             service.retrieveSnowtams(getApplicationContext(), oaci);
-        else
+        }
+        else {
             displayToast(getString(R.string.error_fill_fields));
+        }
     }
 
     public void goToNextActivity(ArrayList<Snowtam> snowtams) {

@@ -8,4 +8,5 @@
     <string name="raw_snowtam">SNOWTAM brut</string>
     <string name="map">Carte</string>
     <string name="error_fill_fields">Veuillez saisir au moins un code OACI</string>
+    <string name="message_loading_snowtams">Récupération des SNOWTAMs en cours...</string>
 </resources>

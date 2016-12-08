@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import snowtam_ensim.snowtamreader2.R;
 import snowtam_ensim.snowtamreader2.activities.MainActivity;
 import snowtam_ensim.snowtamreader2.model.Snowtam;
 
@@ -134,6 +135,7 @@ public class SnowtamRetrieval {
     private void sendResult() {
         if (nbSnowtamsRequested == oacis.size() * 2) {
             Log.d("SnowtamReader", "Sending data");
+            activity.findViewById(R.id.btnValidate).setEnabled(true);
             activity.goToNextActivity(snowtams);
         }
     }
