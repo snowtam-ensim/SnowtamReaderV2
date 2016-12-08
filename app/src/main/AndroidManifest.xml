@@ -24,8 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SnowtamDisplayActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".activities.SnowtamDetailActivity"
             android:screenOrientation="portrait" />
         <!--
@@ -40,9 +38,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".activities.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

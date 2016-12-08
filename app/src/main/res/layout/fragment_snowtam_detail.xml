@@ -16,6 +16,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/snowtam_title_textView"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:visibility="gone" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

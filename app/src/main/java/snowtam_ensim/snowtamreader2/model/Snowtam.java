@@ -2,7 +2,6 @@ package snowtam_ensim.snowtamreader2.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,14 +14,13 @@ public class Snowtam implements Parcelable {
     private String oaci;
     private String rawContent;
     private String parsedContent;
+    private String location;
+    private double latitude;
+    private double longitude;
 
     public Snowtam(String oaci, String content) {
         this.oaci = oaci;
         this.rawContent = content;
-
-        Log.d("SnowtamReader", rawContent);
-
-        parseSnowtam();
     }
 
     public String getOaci() {
@@ -37,38 +35,28 @@ public class Snowtam implements Parcelable {
         return parsedContent;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.oaci);
-        dest.writeString(this.rawContent);
-        dest.writeString(this.parsedContent);
+    public double getLatitude() {
+        return latitude;
     }
 
-    protected Snowtam(Parcel in) {
-        this.oaci = in.readString();
-        this.rawContent = in.readString();
-        this.parsedContent = in.readString();
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public static final Creator<Snowtam> CREATOR = new Creator<Snowtam>() {
-        @Override
-        public Snowtam createFromParcel(Parcel source) {
-            return new Snowtam(source);
-        }
+    public double getLongitude() {
+        return longitude;
+    }
 
-        @Override
-        public Snowtam[] newArray(int size) {
-            return new Snowtam[size];
-        }
-    };
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
-    private void parseSnowtam() {
-        String regex = "^(SWEN[0-9]{4}).*\\n\\(SNOWTAM [0-9]{4}\\n(A\\) [A-Z]{4}\\n)B\\) ([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})";
+    public void parseSnowtam() {
+        String regex = "^(SWEN[0-9]{4}).*\\n\\(SNOWTAM [0-9]{4}\\n(A\\) [A-Z]{4})\\nB\\) ([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(rawContent);
 
@@ -116,7 +104,7 @@ public class Snowtam implements Parcelable {
             }
             date += matcher.group(5) + "h" + matcher.group(6) + "UTC\n";
 
-            parsedContent = matcher.group(1) + "\n" + matcher.group(2) + "B) " + date;
+            parsedContent = matcher.group(1) + "\n" + matcher.group(2) + " - " + location + "\nB) " + date;
         }
 
         // Analyze the second part
@@ -232,4 +220,39 @@ public class Snowtam implements Parcelable {
         }
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.oaci);
+        dest.writeString(this.rawContent);
+        dest.writeString(this.parsedContent);
+        dest.writeString(this.location);
+        dest.writeDouble(this.latitude);
+        dest.writeDouble(this.longitude);
+    }
+
+    protected Snowtam(Parcel in) {
+        this.oaci = in.readString();
+        this.rawContent = in.readString();
+        this.parsedContent = in.readString();
+        this.location = in.readString();
+        this.latitude = in.readDouble();
+        this.longitude = in.readDouble();
+    }
+
+    public static final Creator<Snowtam> CREATOR = new Creator<Snowtam>() {
+        @Override
+        public Snowtam createFromParcel(Parcel source) {
+            return new Snowtam(source);
+        }
+
+        @Override
+        public Snowtam[] newArray(int size) {
+            return new Snowtam[size];
+        }
+    };
 }
